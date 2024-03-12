@@ -1,0 +1,95 @@
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.CheckDirs.Start
+f.Intrinsic.Control.Try
+v.local.serror.declare
+v.Local.sDir.Declare
+v.Local.bExists.Declare
+v.Local.sDFile.Declare
+v.Local.sSFile.Declare
+v.Local.iRet.Declare
+
+'first check the base directory, if it's there, skip the rest
+f.Intrinsic.String.Build("{0}\custom\4463\{1}",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDir)
+f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+f.Intrinsic.Control.If(v.Local.bExists,=,False)
+	'check for templates directory
+	f.Intrinsic.String.Build("{0}\Custom\4463\{1}\Templates\",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf	
+	'check for quotes directory
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\Quotes\",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'checkfor quote attachments
+	f.Intrinsic.String.Build("{0}attachments\",v.Local.sDir,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'check for orders
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\Orders\",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'check for order attachments
+	f.Intrinsic.String.Build("{0}attachments\",v.Local.sDir,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'check for po directory
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\PO\",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'check for po attachments
+	f.Intrinsic.String.Build("{0}attachments\",v.Local.sDir,v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	
+	'check for template files from previous versions of the script
+	
+	'orders
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\templates\order.txt",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDFile)
+	F.Intrinsic.File.Exists(V.Local.sDFile,V.Local.bExists)
+	F.Intrinsic.Control.If(V.Local.bExists,=,False)
+		f.Intrinsic.String.Build("{0}\Custom\Order.txt",v.Caller.BusintDir,v.Local.sSFile)
+		f.Intrinsic.File.CopyFile(v.Local.sSFile,v.Local.sDFile)
+	F.Intrinsic.Control.EndIf
+	'purchase orders
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\templates\po.txt",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDFile)
+	F.Intrinsic.File.Exists(V.Local.sDFile,V.Local.bExists)
+	F.Intrinsic.Control.If(V.Local.bExists,=,False)
+		f.Intrinsic.String.Build("{0}\Custom\PO.txt",v.Caller.BusintDir,v.Local.sSFile)
+		f.Intrinsic.File.CopyFile(v.Local.sSFile,v.Local.sDFile)
+	F.Intrinsic.Control.EndIf
+	'quotes
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\templates\quote.txt",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDFile)
+	F.Intrinsic.File.Exists(V.Local.sDFile,V.Local.bExists)
+	F.Intrinsic.Control.If(V.Local.bExists,=,False)
+		f.Intrinsic.String.Build("{0}\Custom\quote.txt",v.Caller.BusintDir,v.Local.sSFile)
+		f.Intrinsic.File.MoveFile(v.Local.sSFile,v.Local.sDFile)
+	F.Intrinsic.Control.EndIf
+	'signature template
+	f.Intrinsic.String.Build("{0}\custom\4463\{1}\templates\example sig.txt",v.Caller.GlobalDir,v.Caller.CompanyCode,v.Local.sDFile)
+	F.Intrinsic.File.Exists(V.Local.sDFile,V.Local.bExists)
+	F.Intrinsic.Control.If(V.Local.bExists,=,False)
+		f.Intrinsic.String.Build("{0}\Custom\Order.txt",v.Caller.BusintDir,v.Local.sSFile)
+		f.Intrinsic.File.MoveFile(v.Local.sSFile,v.Local.sDFile)
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.Catch
+f.Intrinsic.Control.CallSub(catching,"sub",v.Ambient.CurrentSubroutine,"errorno",v.Ambient.ErrorNumber,"errordesc",v.Ambient.ErrorDescription,"program",v.Ambient.ScriptFile)
+f.Intrinsic.Control.EndTry
+Program.Sub.CheckDirs.End
